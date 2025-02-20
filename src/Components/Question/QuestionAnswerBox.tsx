@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 export default function QuestionAnswerBox() {
   return (
     <>
@@ -33,18 +35,14 @@ export default function QuestionAnswerBox() {
         </div>
         <div className="flex-1"></div>
         <div className="flex justify-center mb-15">
-          <button
-            onClick={clickMe}
-            className="border w-20 bg-white h-10 hover:cursor-pointer"
-          >
-            Next
-          </button>
+          <Link to="/">
+            <button className="border w-20 bg-white h-10 hover:cursor-pointer">
+              Next
+            </button>
+          </Link>
         </div>
       </div>
     </>
   );
 }
 
-function clickMe() {
-  alert("You clicked me!");
-}
