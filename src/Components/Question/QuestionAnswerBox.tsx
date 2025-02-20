@@ -4,13 +4,31 @@ export default function QuestionAnswerBox() {
       <div className="flex flex-col border bg-yellow-400 w-100 h-100">
         <div className="flex flex-col p-4 m-10 text-2xl">
           <label className="p-4">
-            <input type="radio" name="myRadio" value="answer1" className="size-4"/> Answer
+            <input
+              type="radio"
+              name="myRadio"
+              value="answer1"
+              className="size-4"
+            />{" "}
+            Answer
           </label>
           <label className="p-4">
-            <input type="radio" name="myRadio" value="answer2" className="size-4" /> Answer
+            <input
+              type="radio"
+              name="myRadio"
+              value="answer2"
+              className="size-4"
+            />{" "}
+            Answer
           </label>
           <label className="p-4">
-            <input type="radio" name="myRadio" value="answer3" className="size-4"/> Answer
+            <input
+              type="radio"
+              name="myRadio"
+              value="answer3"
+              className="size-4"
+            />{" "}
+            Answer
           </label>
         </div>
         <div className="flex-1"></div>
@@ -30,4 +48,3 @@ export default function QuestionAnswerBox() {
 function clickMe() {
   alert("You clicked me!");
 }
-
