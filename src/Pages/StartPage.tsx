@@ -1,8 +1,8 @@
 
 
-export default function Page1() {
+export default function StartPage() {
 
   return (
-    <h1>Page 1 test</h1>
+    <h1>StartPage</h1>
   )
 }

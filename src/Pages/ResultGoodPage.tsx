@@ -1,7 +1,7 @@
 
-export default function Page3() {
+export default function ResultGoodPage() {
 
   return (
-    <h1>Page 3 test</h1>
+    <h1>ResultGoodPage</h1>
   )
 }
