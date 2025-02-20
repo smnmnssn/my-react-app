@@ -1,8 +1,15 @@
-
+import StartBox from "../Components/Start/StartBox";
 
 export default function StartPage() {
-
   return (
-    <h1>StartPage</h1>
-  )
+    <>
+      <div className="flex justify-center">
+        <h1 className="text-9xl mt-50 mb-10">QUIZZY</h1>
+        
+      </div>
+      <div className="flex justify-center">
+      <StartBox />
+      </div>
+    </>
+  );
 }
