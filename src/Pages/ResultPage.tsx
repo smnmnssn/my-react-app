@@ -3,7 +3,7 @@ import ResultBox from "../Components/Result/ResultBox";
 
 export default function ResultPage() {
   return (
-    <div>
+    <div className="flex flex-col items-center pt-30">
       <QuestionTextBox /> Ändra text till "RESULTS" i textboxen
       <ResultBox /> Ändra text till "Try again maybe?" vid under 60% rätt
     </div>

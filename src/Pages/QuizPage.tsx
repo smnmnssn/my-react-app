@@ -4,7 +4,7 @@ import QuestionTextBox from "../Components/Question/QuestionTextBox";
 
 export default function QuizPage() {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col items-center pt-30">
       <QuestionNumber />
       <QuestionTextBox />
       <QuestionAnswerBox />
