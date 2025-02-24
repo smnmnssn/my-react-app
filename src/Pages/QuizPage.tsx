@@ -33,31 +33,30 @@ export default function QuizPage() {
   };
 
   const handleNextQuestion = () => {
-    if (selectedAnswer === questions[currentQuestionIndex].correct) {
-      setScore((prevScore) => {
-        const newScore = prevScore + 1;
-
-        // Om det är sista frågan, navigera till ResultPage med rätt poäng
-        if (currentQuestionIndex === questions.length - 1) {
-          navigate("/resultpage", {
-            state: { score: newScore, totalQuestions: questions.length },
-          });
-        }
-
-        return newScore;
-      });
+    if (!selectedAnswer) {
+      console.log("No answer selected!"); // Förhindrar att gå vidare utan svar
+      return;
     }
 
-    if (currentQuestionIndex < questions.length - 1) {
-      console.log(
-        "Next question! Current index before update:",
-        currentQuestionIndex
-      );
-      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-      setSelectedAnswer(null);
-    } else {
-      console.log("Quiz done! Final score:", score);
-    }
+    setScore((prevScore) => {
+      const newScore =
+        selectedAnswer === questions[currentQuestionIndex].correct
+          ? prevScore + 1
+          : prevScore;
+
+      if (currentQuestionIndex === questions.length - 1) {
+        console.log("Navigating to ResultPage with score:", newScore);
+        navigate("/resultpage", {
+          state: { score: newScore, totalQuestions: questions.length },
+        });
+        return newScore; // Viktigt! Returnerar det nya score-värdet
+      }
+
+      return newScore;
+    });
+
+    setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+    setSelectedAnswer(null);
   };
 
   return (
