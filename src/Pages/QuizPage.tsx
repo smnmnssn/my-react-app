@@ -3,60 +3,7 @@ import { useNavigate } from "react-router";
 import QuestionAnswerBox from "../Components/Question/QuestionAnswerBox";
 import QuestionNumber from "../Components/Question/QuestionNumber";
 import QuestionTextBox from "../Components/Question/QuestionTextBox";
-
-const questions = [
-  {
-    text: "What is the capital of France?",
-    answers: ["Berlin", "Paris", "Madrid"],
-    correct: "Paris",
-  },
-  {
-    text: "Who developed JavaScript?",
-    answers: ["Brendan Eich", "Linus Torvalds", "Elon Musk"],
-    correct: "Brendan Eich",
-  },
-  {
-    text: "Who developed JavaScript?",
-    answers: ["B", "LX", "Elon X"],
-    correct: "Brendan Eich",
-  },
-  {
-    text: "Who developed JavaScript?",
-    answers: ["dwaDAWD", "Ldd", "dwdaw"],
-    correct: "Brendan Eich",
-  },
-  {
-    text: "Who developed JavaScript?",
-    answers: ["vxc", "dwdw", "waassssk"],
-    correct: "Brendan Eich",
-  },
-  {
-    text: "Who developed JavaScript?",
-    answers: ["Brendan Eich", "Linus Torvalds", "Elon Musk"],
-    correct: "Brendan Eich",
-  },
-  {
-    text: "Who developed JavaScript?",
-    answers: ["Brendan Eich", "Linus Torvalds", "Elon Musk"],
-    correct: "Brendan Eich",
-  },
-  {
-    text: "Who developed JavaScript?",
-    answers: ["Brendan Eich", "Linus Torvalds", "Elon Musk"],
-    correct: "Brendan Eich",
-  },
-  {
-    text: "Who developed JavaScript?",
-    answers: ["Brendan Eich", "Linus Torvalds", "Elon Musk"],
-    correct: "Brendan Eich",
-  },
-  {
-    text: "Who developed JavaScript?",
-    answers: ["Brendan Eich", "Linus Torvalds", "Elon Musk"],
-    correct: "Brendan Eich",
-  },
-
-];
+import { questions } from "../data";
 
 export default function QuizPage() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -74,7 +21,6 @@ export default function QuizPage() {
   };
 
   const handleNextQuestion = () => {
-
     setScore((prevScore) => {
       const newScore =
         selectedAnswer === questions[currentQuestionIndex].correct
@@ -98,7 +44,10 @@ export default function QuizPage() {
 
   return (
     <div className="flex flex-col items-center pt-30">
-      <QuestionNumber currentIndex={currentQuestionIndex} totalQuestions={questions.length} />
+      <QuestionNumber
+        currentIndex={currentQuestionIndex}
+        totalQuestions={questions.length}
+      />
       <QuestionTextBox question={questions[currentQuestionIndex].text} />
       <QuestionAnswerBox
         answers={questions[currentQuestionIndex].answers}
