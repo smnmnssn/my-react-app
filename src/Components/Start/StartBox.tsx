@@ -15,7 +15,7 @@ export default function StartBox() {
           name="Category"
           className="ml-2 border bg-white hover:cursor-pointer"
           value = { category }
-          onChange = { (e) => setCategory(e.target.value)}
+          onChange = { (e) => setCategory(e.target.value) }
         >
           <option value="Javascript">JavaScript</option>
           <option value="History">History</option>
@@ -37,7 +37,7 @@ export default function StartBox() {
       </label>
       <div className="flex-1"></div>
       <div className="flex justify-center mb-15">
-        <Link to="quizpage">
+        <Link to={`/quizpage?category=${category}&difficulty=${difficulty}`}>
           <button className="border w-40 bg-white h-10 hover:cursor-pointer">
             Start Quiz
           </button>
