@@ -1,11 +1,12 @@
-import { useState } from "react";
+interface QuestionNumberProps {
+  currentIndex: number;
+  totalQuestions: number;
+}
 
-export default function QuestionNumber() {
-  const [questionIndex, setQuestionIndex] = useState(1);
-
+export default function QuestionNumber({ currentIndex, totalQuestions }: QuestionNumberProps) {
   return (
     <div className="flex justify-center">
-      <p className="text-3xl p-5">{questionIndex}/10</p>
+      <p className="text-3xl p-5">{currentIndex + 1}/{totalQuestions}</p>
     </div>
   );
 }

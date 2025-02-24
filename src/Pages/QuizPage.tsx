@@ -74,10 +74,6 @@ export default function QuizPage() {
   };
 
   const handleNextQuestion = () => {
-    if (!selectedAnswer) {
-      console.log("No answer selected!"); // Förhindrar att gå vidare utan svar
-      return;
-    }
 
     setScore((prevScore) => {
       const newScore =
@@ -102,7 +98,7 @@ export default function QuizPage() {
 
   return (
     <div className="flex flex-col items-center pt-30">
-      <QuestionNumber />
+      <QuestionNumber currentIndex={currentQuestionIndex} totalQuestions={questions.length} />
       <QuestionTextBox question={questions[currentQuestionIndex].text} />
       <QuestionAnswerBox
         answers={questions[currentQuestionIndex].answers}
