@@ -1,28 +1,38 @@
+import { useLocation, useNavigate } from "react-router";
+
 export default function ResultBox() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { score, totalQuestions } = location.state || {
+    score: 0,
+    totalQuestions: 10,
+  }; // 🛠️ Standardvärde om något saknas
+
+  // ✅ Beräkna procentandel
+  const percentage = Math.round((score / totalQuestions) * 100);
+
+  // ✅ Anpassa meddelande beroende på resultat
+  const resultMessage = percentage >= 60 ? "Impressive! 🎉" : "Maybe try again? 😕";
+
   return (
     <>
-      <div className="flex flex-col border bg-yellow-400 w-100 h-100">
-        <div className="flex flex-col p-4 m-10 text-2xl">
-          <p className="flex justify-center text-3xl p-5 underline">Impressive!</p>
-          <p className="flex justify-center text-3xl p-5">8/10 ✔</p>
-          <p className="flex justify-center text-3xl">80% ✔</p>
-
-
+      <div className="flex flex-col border bg-yellow-400 w-100 h-100 items-center">
+        <p className="text-3xl mt-20 mb-5 underline">{resultMessage}</p>
+        <p className="text-2xl m-2">
+        {score}/{totalQuestions} ✅
+        </p>
+        <p className="text-2xl mt-2">{percentage}% ✅</p>
+        {/* Knapp för att spela igen */}
+        <div className="flex-1">
         </div>
-        <div className="flex-1"></div>
-        <div className="flex justify-center mb-15">
-          <button
-            onClick={clickMe}
-            className="border w-25 bg-white h-10 hover:cursor-pointer"
-          >
-            Play again
-          </button>
-        </div>
+
+        <button
+          className="border mb-15 w-40 bg-white h-10 mt-5 hover:cursor-pointer text-xl"
+          onClick={() => navigate("/")}
+        >
+          Play again
+        </button>
       </div>
     </>
   );
-}
-
-function clickMe() {
-  alert("You clicked me!");
 }
