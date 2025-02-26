@@ -60,21 +60,22 @@ export default function QuizPage() {
 
   const handleNextQuestion = () => {
     if (!selectedAnswer) return;
-  
-    const isCorrect = selectedAnswer === fetchedQuestion?.[currentQuestionIndex].correctAnswer;
-  
+
+    const isCorrect =
+      selectedAnswer === fetchedQuestion?.[currentQuestionIndex].correctAnswer;
+
     setShowFeedback(true); // 🔥 Aktivera feedback-visning
-  
+
     setScore((prevScore) => prevScore + (isCorrect ? 1 : 0)); // 🔥 Uppdatera score korrekt
-  
+
     setTimeout(() => {
       setShowFeedback(false); // 🔥 Ta bort feedback efter 1 sekund
-  
+
       if (currentQuestionIndex === fetchedQuestion!.length - 1) {
         navigate("/resultpage", {
-          state: { 
+          state: {
             score: score + (isCorrect ? 1 : 0), // 🚨 Felet är att `score` fortfarande har sitt gamla värde
-            totalQuestions: fetchedQuestion!.length 
+            totalQuestions: fetchedQuestion!.length,
           },
         });
       } else {
@@ -83,7 +84,6 @@ export default function QuizPage() {
       }
     }, 1000); // 🔥 Vänta 1 sekund innan nästa fråga
   };
-  
 
   return (
     <div className="flex flex-col items-center pt-30">

@@ -8,6 +8,11 @@ type APIQuestion = {
 
 let lastRequestTime = 0; // 🔥 Håller koll på senaste anropet
 
+function decodeHTMLEntities(text: string): string {
+  const textarea = document.createElement("textarea");
+  textarea.innerHTML = text;
+  return textarea.value;
+}
 
 
 export async function fetchQuestions(): Promise<QuestionType[]> {
@@ -33,18 +38,16 @@ export async function fetchQuestions(): Promise<QuestionType[]> {
     }
 
     const json = await response.json();
-
-
-
     return json.results.map((q: APIQuestion) => ({
-      question: q.question,
-      answers: [...q.incorrect_answers, q.correct_answer].sort(() => Math.random() - 0.5),
-      correctAnswer: q.correct_answer,
+      question: decodeHTMLEntities(q.question), // 🔥 Avkoda HTML
+      answers: [...q.incorrect_answers, q.correct_answer]
+        .map(decodeHTMLEntities) // 🔥 Avkoda svaren också
+        .sort(() => Math.random() - 0.5),
+      correctAnswer: decodeHTMLEntities(q.correct_answer), // 🔥 Avkoda rätt svar
     }));
 
   } catch (error) {
-    console.error("❌ Error fetching questions:", error);
+    console.error("Error fetching questions:", error);
     return [];
   }
 }
-
