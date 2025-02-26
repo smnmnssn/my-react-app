@@ -2,12 +2,12 @@ import { useState } from "react";
 import { Link } from "react-router";
 
 export default function StartBox() {
-  const [category, setCategory] = useState("Javascript");
+  const [category, setCategory] = useState("Computer Science");
   const [difficulty, setDifficulty] = useState("Normal");
 
   return (
     <div className="flex flex-col border bg-yellow-400 w-100 h-100">
-      <label htmlFor="" className="text-2xl p-4 mt-10">
+      <label htmlFor="" className="text-2xl p-4 mt-20">
         {" "}
         Category :
         <select
@@ -16,7 +16,7 @@ export default function StartBox() {
           value={category}
           onChange={(e) => setCategory(e.target.value)}
         >
-          <option value="Javascript">JavaScript</option>
+          <option value="Computer Science">Computer Science</option>
           <option value="History">History</option>
           <option value="Science">Science</option>
         </select>
@@ -37,7 +37,7 @@ export default function StartBox() {
       <div className="flex-1"></div>
       <div className="flex justify-center mb-15">
         <Link to={`/quizpage?category=${category}&difficulty=${difficulty}`}>
-          <button className="border w-40 bg-white h-10 hover:cursor-pointer">
+          <button className="text-2xl border w-40 bg-white h-10 hover:cursor-pointer">
             Start Quiz
           </button>
         </Link>
