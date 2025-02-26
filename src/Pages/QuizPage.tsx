@@ -65,12 +65,17 @@ export default function QuizPage() {
   
     setShowFeedback(true); // 🔥 Aktivera feedback-visning
   
+    setScore((prevScore) => prevScore + (isCorrect ? 1 : 0)); // 🔥 Uppdatera score korrekt
+  
     setTimeout(() => {
       setShowFeedback(false); // 🔥 Ta bort feedback efter 1 sekund
   
       if (currentQuestionIndex === fetchedQuestion!.length - 1) {
         navigate("/resultpage", {
-          state: { score: score + (isCorrect ? 1 : 0), totalQuestions: fetchedQuestion!.length },
+          state: { 
+            score: score + (isCorrect ? 1 : 0), // 🚨 Felet är att `score` fortfarande har sitt gamla värde
+            totalQuestions: fetchedQuestion!.length 
+          },
         });
       } else {
         setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
@@ -78,6 +83,7 @@ export default function QuizPage() {
       }
     }, 1000); // 🔥 Vänta 1 sekund innan nästa fråga
   };
+  
 
   return (
     <div className="flex flex-col items-center pt-30">
