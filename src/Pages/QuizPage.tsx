@@ -19,6 +19,7 @@ export default function QuizPage() {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [score, setScore] = useState(0);
   const navigate = useNavigate();
+  const [showFeedback, setShowFeedback] = useState(false); // 🔥 Visar rätt/fel frame i 1 sekund
 
   useEffect(() => {
     console.log("Updated Score:", score);
@@ -58,27 +59,24 @@ export default function QuizPage() {
   };
 
   const handleNextQuestion = () => {
-    if (!selectedAnswer) return; // Säkerställ att spelaren har valt ett svar
-
-    const isCorrect =
-      selectedAnswer === fetchedQuestion?.[currentQuestionIndex].correctAnswer;
-
-    setScore((prevScore) => (isCorrect ? prevScore + 1 : prevScore));
-
-    // Vänta 1 sekund innan frågan byts
+    if (!selectedAnswer) return;
+  
+    const isCorrect = selectedAnswer === fetchedQuestion?.[currentQuestionIndex].correctAnswer;
+  
+    setShowFeedback(true); // 🔥 Aktivera feedback-visning
+  
     setTimeout(() => {
+      setShowFeedback(false); // 🔥 Ta bort feedback efter 1 sekund
+  
       if (currentQuestionIndex === fetchedQuestion!.length - 1) {
         navigate("/resultpage", {
-          state: {
-            score: score + (isCorrect ? 1 : 0),
-            totalQuestions: fetchedQuestion!.length,
-          },
+          state: { score: score + (isCorrect ? 1 : 0), totalQuestions: fetchedQuestion!.length },
         });
       } else {
         setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
         setSelectedAnswer(null);
       }
-    }, 1000); // Väntetid på 1 sekund
+    }, 1000); // 🔥 Vänta 1 sekund innan nästa fråga
   };
 
   return (
@@ -93,6 +91,8 @@ export default function QuizPage() {
         onAnswerSelect={handleAnswerSelect}
         onNext={handleNextQuestion}
         selectedAnswer={selectedAnswer}
+        correctAnswer={fetchedQuestion[currentQuestionIndex].correctAnswer}
+        showFeedback={showFeedback}
       />
     </div>
   );

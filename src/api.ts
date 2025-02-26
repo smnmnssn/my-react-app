@@ -6,20 +6,9 @@ type APIQuestion = {
   correct_answer: string;
 };
 
-let sessionToken: string | null = null;
 let lastRequestTime = 0; // 🔥 Håller koll på senaste anropet
 
-// Funktion för att hämta en ny sessionstoken
-async function fetchSessionToken(): Promise<string | null> {
-  try {
-    const response = await fetch("https://opentdb.com/api_token.php?command=request");
-    const data = await response.json();
-    return data.token || null;
-  } catch (error) {
-    console.error("Error fetching session token:", error);
-    return null;
-  }
-}
+
 
 export async function fetchQuestions(): Promise<QuestionType[]> {
   const now = Date.now();
@@ -32,12 +21,8 @@ export async function fetchQuestions(): Promise<QuestionType[]> {
 
   lastRequestTime = Date.now(); // 🔥 Uppdatera senaste anropstiden
 
-  if (!sessionToken) {
-    sessionToken = await fetchSessionToken(); // 🔥 Hämta token om vi inte har en
-  }
 
-  const url = `https://opentdb.com/api.php?amount=10&category=18&difficulty=medium&type=multiple&token=${sessionToken}`;
-
+  const url = "https://opentdb.com/api.php?amount=10&category=18&difficulty=easy&type=multiple";
   try {
     console.log("Fetching questions...");
     const response = await fetch(url);
@@ -49,11 +34,7 @@ export async function fetchQuestions(): Promise<QuestionType[]> {
 
     const json = await response.json();
 
-    if (json.response_code === 4) {
-      console.warn("Session Token Empty - Fetching new token...");
-      sessionToken = await fetchSessionToken();
-      return fetchQuestions(); // 🔥 Försök igen med ny token
-    }
+
 
     return json.results.map((q: APIQuestion) => ({
       question: q.question,

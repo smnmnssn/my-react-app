@@ -3,6 +3,8 @@ interface Props {
   onAnswerSelect: (answer: string) => void;
   onNext: () => void;
   selectedAnswer: string | null;
+  correctAnswer: string;
+  showFeedback: boolean;
 }
 
 export default function QuestionAnswerBox({
@@ -10,22 +12,23 @@ export default function QuestionAnswerBox({
   onAnswerSelect,
   onNext,
   selectedAnswer,
+  correctAnswer,
+  showFeedback,
 }: Props) {
   return (
     <div className="flex flex-col border bg-yellow-400 w-100 h-100">
       <div className="flex flex-col p-4 m-10 text-2xl">
         {answers.map((answer, index) => {
-          const isCorrect = selectedAnswer && answer === selectedAnswer;
-          const borderColor = selectedAnswer
-            ? answer === selectedAnswer
-              ? isCorrect
-                ? "border-green-500" // ✅ Rätt svar → Grön ram
-                : "border-red-500" // ❌ Fel svar → Röd ram
-              : ""
-            : "";
+          let borderColor = "";
+
+          if (showFeedback) {
+            if (answer === correctAnswer) borderColor = "border-green-700"; // ✅ Rätt svar → Grön frame
+            if (answer === selectedAnswer && answer !== correctAnswer)
+              borderColor = "border-red-700"; // ❌ Fel svar → Röd frame
+          }
 
           return (
-            <label key={index} className={`p-4 ${borderColor}`}>
+            <label key={index} className={`p-4 border-4 ${borderColor}`}>
               <input
                 type="radio"
                 name="answer"
@@ -33,6 +36,7 @@ export default function QuestionAnswerBox({
                 checked={selectedAnswer === answer}
                 className="size-4"
                 onChange={() => onAnswerSelect(answer)}
+                disabled={showFeedback} // 🔒 Förhindra ändring under feedback-visning
               />
               {answer}
             </label>
@@ -46,7 +50,7 @@ export default function QuestionAnswerBox({
             selectedAnswer ? "" : "opacity-50 cursor-not-allowed"
           }`}
           disabled={!selectedAnswer}
-          onClick={onNext} // 🛑 Ta bort <Link> och låt `onNext` hantera bytet
+          onClick={onNext}
         >
           Next
         </button>
