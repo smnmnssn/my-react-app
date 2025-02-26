@@ -25,18 +25,16 @@ export default function QuizPage() {
   }, [score]); // 🔥 Körs varje gång `score` ändras
 
   useEffect(() => {
+    if (fetchedQuestion) return; // 🔥 Förhindra extra API-anrop om frågor redan finns
+
     const getQuestions = async () => {
-      const data = await fetchQuestions();
-      if (data.length > 0) {
-        setFetchedQuestion(data);
-      } else {
-        console.error("No questions retrieved from API.");
-      }
+      console.log("Fetching questions...");
+      const data = await fetchQuestions(); // 🔥 Hämtar frågor en gång
+      setFetchedQuestion(data);
     };
-    
 
     getQuestions();
-  }, []);
+  }, []); // 🔥 Körs endast en gång vid sidstart
 
   // 🔥 Säkerställ att vi inte försöker rendera innan frågorna har laddats
   if (!fetchedQuestion) {
@@ -60,24 +58,28 @@ export default function QuizPage() {
   };
 
   const handleNextQuestion = () => {
+    if (!selectedAnswer) return; // Säkerställ att spelaren har valt ett svar
+
     const isCorrect =
       selectedAnswer === fetchedQuestion?.[currentQuestionIndex].correctAnswer;
-  
-    setScore((prevScore) => {
-      const newScore = isCorrect ? prevScore + 1 : prevScore;
-      return newScore;
-    });
-  
-    if (currentQuestionIndex === fetchedQuestion!.length - 1) {
-      navigate("/resultpage", {
-        state: { score: score + (isCorrect ? 1 : 0), totalQuestions: fetchedQuestion!.length },
-      });
-    } else {
-      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-      setSelectedAnswer(null);
-    }
+
+    setScore((prevScore) => (isCorrect ? prevScore + 1 : prevScore));
+
+    // Vänta 1 sekund innan frågan byts
+    setTimeout(() => {
+      if (currentQuestionIndex === fetchedQuestion!.length - 1) {
+        navigate("/resultpage", {
+          state: {
+            score: score + (isCorrect ? 1 : 0),
+            totalQuestions: fetchedQuestion!.length,
+          },
+        });
+      } else {
+        setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+        setSelectedAnswer(null);
+      }
+    }, 1000); // Väntetid på 1 sekund
   };
-  
 
   return (
     <div className="flex flex-col items-center pt-30">

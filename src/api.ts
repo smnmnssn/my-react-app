@@ -6,18 +6,55 @@ type APIQuestion = {
   correct_answer: string;
 };
 
-async function fetchAPIQuestions(): Promise<QuestionType[]> {
-  const url = "https://opentdb.com/api.php?amount=10&category=18&difficulty=medium&type=multiple";
+let sessionToken: string | null = null;
+let lastRequestTime = 0; // 🔥 Håller koll på senaste anropet
+
+// Funktion för att hämta en ny sessionstoken
+async function fetchSessionToken(): Promise<string | null> {
+  try {
+    const response = await fetch("https://opentdb.com/api_token.php?command=request");
+    const data = await response.json();
+    return data.token || null;
+  } catch (error) {
+    console.error("Error fetching session token:", error);
+    return null;
+  }
+}
+
+export async function fetchQuestions(): Promise<QuestionType[]> {
+  const now = Date.now();
+  const timeSinceLastRequest = now - lastRequestTime;
+
+  if (timeSinceLastRequest < 5000 && lastRequestTime !== 0) {
+    console.warn(`⚠️ Rate limit! Waiting ${5000 - timeSinceLastRequest} ms before next request.`);
+    await new Promise((resolve) => setTimeout(resolve, 5000 - timeSinceLastRequest));
+  }
+
+  lastRequestTime = Date.now(); // 🔥 Uppdatera senaste anropstiden
+
+  if (!sessionToken) {
+    sessionToken = await fetchSessionToken(); // 🔥 Hämta token om vi inte har en
+  }
+
+  const url = `https://opentdb.com/api.php?amount=10&category=18&difficulty=medium&type=multiple&token=${sessionToken}`;
 
   try {
+    console.log("Fetching questions...");
     const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
+
+    if (response.status === 429) {
+      console.warn("🚨 Too Many Requests - API rate limit reached.");
+      return []; // 🔥 Returnera en tom array istället för att göra fler requests
     }
 
     const json = await response.json();
 
-    // Omvandla API-svaret till rätt format
+    if (json.response_code === 4) {
+      console.warn("Session Token Empty - Fetching new token...");
+      sessionToken = await fetchSessionToken();
+      return fetchQuestions(); // 🔥 Försök igen med ny token
+    }
+
     return json.results.map((q: APIQuestion) => ({
       question: q.question,
       answers: [...q.incorrect_answers, q.correct_answer].sort(() => Math.random() - 0.5),
@@ -25,27 +62,8 @@ async function fetchAPIQuestions(): Promise<QuestionType[]> {
     }));
 
   } catch (error) {
-    if (error instanceof Error) {
-      console.error("Error fetching questions:", error.message);
-    } else {
-      console.error("An unknown error occurred.");
-    }
+    console.error("❌ Error fetching questions:", error);
     return [];
   }
 }
 
-// ✅ Ny funktion för att hantera retries
-export async function fetchQuestions(retryCount = 3, delay = 3000): Promise<QuestionType[]> {
-  for (let i = 0; i < retryCount; i++) {
-    const questions = await fetchAPIQuestions();
-    if (questions.length > 0) {
-      return questions;
-    }
-
-    console.warn(`Too many requests. Retrying in ${delay / 1000} seconds...`);
-    await new Promise((resolve) => setTimeout(resolve, delay));
-    delay *= 2;
-  }
-
-  return [];
-}
