@@ -19,16 +19,18 @@ export default function QuestionAnswerBox({
     <div className="flex flex-col border bg-yellow-400 w-100 h-100">
       <div className="flex flex-col p-4 m-10 text-2xl">
         {answers.map((answer, index) => {
-          let borderColor = "";
+          let borderClass = "border-transparent"; // 🔥 Standard: Ingen border
 
           if (showFeedback) {
-            if (answer === correctAnswer) borderColor = "border-green-700"; // ✅ Rätt svar → Grön frame
-            if (answer === selectedAnswer && answer !== correctAnswer)
-              borderColor = "border-red-700"; // ❌ Fel svar → Röd frame
+            if (answer === correctAnswer) {
+              borderClass = "border-4 border-green-500"; // ✅ Rätt svar → Grön frame
+            } else if (answer === selectedAnswer) {
+              borderClass = "border-4 border-red-500"; // ❌ Fel svar → Röd frame
+            }
           }
 
           return (
-            <label key={index} className={`p-4 border-4 ${borderColor}`}>
+            <label key={index} className={`p-4 ${borderClass}`}>
               <input
                 type="radio"
                 name="answer"
@@ -36,7 +38,7 @@ export default function QuestionAnswerBox({
                 checked={selectedAnswer === answer}
                 className="size-4"
                 onChange={() => onAnswerSelect(answer)}
-                disabled={showFeedback} // 🔒 Förhindra ändring under feedback-visning
+                disabled={showFeedback} // 🔒 Förhindra ändring efter "Next"
               />
               {answer}
             </label>
@@ -58,3 +60,4 @@ export default function QuestionAnswerBox({
     </div>
   );
 }
+
