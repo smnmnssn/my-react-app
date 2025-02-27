@@ -1,9 +1,9 @@
 // Define the props interface for the component
 interface AnswerFeedbackProps {
-  answer: string; // The answer option text
-  selectedAnswer: string | null; // The answer selected by the user
-  correctAnswer: string; // The correct answer for the current question
-  showFeedback: boolean; // Determines whether feedback should be displayed
+  answer: string; 
+  selectedAnswer: string | null; 
+  correctAnswer: string;
+  showFeedback: boolean; 
   onSelect: (answer: string) => void; // Function to handle answer selection
 }
 
