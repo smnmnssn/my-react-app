@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { fetchQuestions } from "../api";
 import QuestionAnswerBox from "../Components/Question/QuestionAnswerBox";
@@ -18,21 +18,20 @@ export default function QuizPage() {
   );
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [score, setScore] = useState(0);
-  const navigate = useNavigate();
   const [showFeedback, setShowFeedback] = useState(false); // Controls visibility of correct/incorrect feedback
+  const navigate = useNavigate();
 
-  // Log score updates for debugging
-  useEffect(() => {
-    console.log("Updated Score:", score);
-  }, [score]); // Runs whenever `score` changes
+  const hasFetched = useRef(false); 
 
+  
   useEffect(() => {
-    if (fetchedQuestion) return; // Prevents redundant API calls if questions are already loaded
+    if (hasFetched.current) return; // ✅ Förhindra att API-anropet körs igen
 
     const getQuestions = async () => {
       console.log("Fetching questions...");
-      const data = await fetchQuestions(); // Fetches questions from the API
+      const data = await fetchQuestions();
       setFetchedQuestion(data);
+      hasFetched.current = true; // ✅ Markera att vi har hämtat frågorna
     };
 
     getQuestions();
