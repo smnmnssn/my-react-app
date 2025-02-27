@@ -1,11 +1,13 @@
+// Define the props interface for the component
 interface AnswerFeedbackProps {
-  answer: string;
-  selectedAnswer: string | null;
-  correctAnswer: string;
-  showFeedback: boolean;
-  onSelect: (answer: string) => void;
+  answer: string; // The answer option text
+  selectedAnswer: string | null; // The answer selected by the user
+  correctAnswer: string; // The correct answer for the current question
+  showFeedback: boolean; // Determines whether feedback should be displayed
+  onSelect: (answer: string) => void; // Function to handle answer selection
 }
 
+// Component for displaying an answer option with feedback
 export default function AnswerFeedback({
   answer,
   selectedAnswer,
@@ -13,26 +15,29 @@ export default function AnswerFeedback({
   showFeedback,
   onSelect,
 }: AnswerFeedbackProps) {
-  let borderClass = "border-transparent"; // 🔥 Ingen border som standard
+  let borderClass = "border-transparent"; // Default: No border
 
+  // Apply border styles based on feedback state
   if (showFeedback) {
     if (answer === correctAnswer) {
-      borderClass = "border-4 border-green-500"; // ✅ Rätt svar → Grön frame
+      borderClass = "border-4 border-green-500"; // Correct answer → Green border
     } else if (answer === selectedAnswer) {
-      borderClass = "border-4 border-red-500"; // ❌ Fel svar → Röd frame
+      borderClass = "border-4 border-red-500"; // Incorrect answer → Red border
     }
   }
 
   return (
+    // Label wrapper for the answer option
     <label className={`p-4 ${borderClass}`}>
+      {/* Radio button for selecting an answer */}
       <input
         type="radio"
         name="answer"
         value={answer}
-        checked={selectedAnswer === answer}
+        checked={selectedAnswer === answer} // Check if this option is the selected one
         className="size-4"
-        onChange={() => onSelect(answer)}
-        disabled={showFeedback} // 🔒 Lås val efter "Next"
+        onChange={() => onSelect(answer)} // Handle selection
+        disabled={showFeedback} // Disable selection after "Next" is clicked
       />
       {answer}
     </label>
