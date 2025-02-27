@@ -1,50 +1,68 @@
-# React + TypeScript + Vite
+# Quiz App Quizzy
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
+This is a dynamic quiz application built with **React**, **TypeScript**, and **Vite**. Users can select a category and difficulty level before starting the quiz. The app fetches questions from the **Open Trivia Database API** and provides interactive answer validation with real-time feedback.
 
-Currently, two official plugins are available:
+## Features
+- **Category & Difficulty Selection** – Choose quiz settings before starting.
+- **Dynamic Question Fetching** – Questions are retrieved from an API.
+- **Answer Feedback** – Highlights correct and incorrect answers.
+- **Score Tracking** – Keeps track of user performance.
+- **Result Page** – Displays final quiz results.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Installation and Running the Project
 
-## Expanding the ESLint configuration
+### **1. Clone the Repository**
+```sh
+git clone https://github.com/smnmnssn/my-react-app
+cd my-react-app
+```
+### **2. Install dependencies**
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+#### Run the following command to install all required dependencies:
+```sh
+npm install
+npm install react-router
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+#### Start the Development Server:
+```sh
+npm run dev
+```
+#### Build for Production:
+```sh
+npm run build
+npm run preview
+```
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+#### This is used in this project: 
+```sh
+React	
+TypeScript	
+Vite
+React Router
+Tailwind CSS	
+Open Trivia DB API
+```
+#### Project Structure:
+```sh
+src/
+│── Components/
+│   ├── Question/
+│   │   ├── QuestionNumber.tsx
+│   │   ├── QuestionTextBox.tsx
+│   │   ├── QuestionAnswerBox.tsx
+│   │   ├── AnswerFeedback.tsx
+│   ├── Result/
+│   │   ├── ResultBox.tsx
+│   ├── Start/
+│   │   ├── StartBox.tsx
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+│── Pages/
+│   ├── QuizPage.tsx
+│   ├── StartPage.tsx
+│   ├── ResultPage.tsx
+│── api.ts (Handles API requests)
+│── App.tsx
+│── main.tsx
 ```
