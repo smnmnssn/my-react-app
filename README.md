@@ -3,6 +3,8 @@
 ## Description
 This is a dynamic quiz application built with **React**, **TypeScript**, and **Vite**. Users can select a category and difficulty level before starting the quiz. The app fetches questions from the **Open Trivia Database API** and provides interactive answer validation with real-time feedback.
 
+Demo link: https://quizzy-react-ts-1-nine.vercel.app/
+
 ## Features
 - **Category & Difficulty Selection** – Choose quiz settings before starting.
 - **Dynamic Question Fetching** – Questions are retrieved from an API.
@@ -66,3 +68,16 @@ src/
 │── App.tsx
 │── main.tsx
 ```
+
+
+
+
+Krav för godkänt:<br>
+ [ x ] Projektet innehåller och använder minst 6 stycken komponenter varav minst 2 stycken 
+är “statefulla"-komponenter. <br>
+ [ x ] React Router har använts för att dynamiskt uppdatera URL’en. <br>
+ [ x ] Git & GitHub har använts <br>
+ [ x ] Projektmappen innehåller en README.md fil - (läs ovan för mer info) <br>
+ [ x ] Uppgiften lämnas in i tid! <br>
+ [ x ] Muntlig presentation är genomförd
+ ``` 

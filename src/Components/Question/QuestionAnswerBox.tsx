@@ -1,13 +1,12 @@
-import AnswerFeedback from "./AnswerFeedback"; // Import the AnswerFeedback component
-
+import AnswerFeedback from "./AnswerFeedback"; 
 // Define the props interface for the component
 interface Props {
-  answers: string[]; // List of answer options
+  answers: string[]; 
   onAnswerSelect: (answer: string) => void; // Function to handle answer selection
   onNext: () => void; // Function to proceed to the next question
-  selectedAnswer: string | null; // The answer selected by the user
-  correctAnswer: string; // The correct answer for the current question
-  showFeedback: boolean; // Determines whether feedback (correct/incorrect) should be displayed
+  selectedAnswer: string | null;
+  correctAnswer: string; 
+  showFeedback: boolean; 
 }
 
 // Component for displaying answer choices and handling user interaction
