@@ -20,18 +20,15 @@ export default function QuizPage() {
   const [score, setScore] = useState(0);
   const [showFeedback, setShowFeedback] = useState(false); // Controls visibility of correct/incorrect feedback
   const navigate = useNavigate();
-
   const hasFetched = useRef(false); 
 
-  
   useEffect(() => {
-    if (hasFetched.current) return; // ✅ Förhindra att API-anropet körs igen
+    if (hasFetched.current) return; // Prevents API call to run again
 
     const getQuestions = async () => {
-      console.log("Fetching questions...");
       const data = await fetchQuestions();
       setFetchedQuestion(data);
-      hasFetched.current = true; // ✅ Markera att vi har hämtat frågorna
+      hasFetched.current = true; // Flag that the questions have been fetched
     };
 
     getQuestions();

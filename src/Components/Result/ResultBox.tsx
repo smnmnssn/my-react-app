@@ -13,7 +13,7 @@ export default function ResultBox() {
   const percentage = Math.round((score / totalQuestions) * 100);
 
   // Customize message based on result
-  const resultMessage = percentage >= 60 ? "Impressive!" : "Maybe try again?";
+  const resultMessage = percentage >= 60 ? "Impressive! 🎉" : "Maybe try again? 🤓";
 
   return (
     <>

@@ -66,3 +66,14 @@ src/
 │── App.tsx
 │── main.tsx
 ```
+
+
+Krav för godkänt:<br>
+ [ x ] Projektet innehåller och använder minst 6 stycken komponenter varav minst 2 stycken 
+är “statefulla"-komponenter. <br>
+ [ x ] React Router har använts för att dynamiskt uppdatera URL’en. <br>
+ [ x ] Git & GitHub har använts <br>
+ [ x ] Projektmappen innehåller en README.md fil - (läs ovan för mer info) <br>
+ [ x ] Uppgiften lämnas in i tid! <br>
+ [ x ] Muntlig presentation är genomförd
+ ``` 
